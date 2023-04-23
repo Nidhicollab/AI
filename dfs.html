@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+
+        # Define the graph as a dictionary of vertices and their neighbors
+# graph = {
+#     'A': ['B', 'C'],
+#     'B': ['D', 'E'],
+#     'C': ['F'],
+#     'D': [],
+#     'E': ['F'],
+#     'F': []
+# }
+
+from collections import defaultdict
+
+# Define the graph as a dictionary of vertices and their neighbors
+
+graph = defaultdict(list)
+
+# Get the number of edges from the user
+num_edges = int(input("Enter the number of edges: "))
+
+# Loop through the edges and add them to the graph
+for i in range(num_edges):
+    u, v = input("Enter the edge (u v): ").split()
+    graph[u].append(v)
+    graph[v].append(u)
+
+# Define the function for BFS algorithm
+
+print(graph)
+
+
+# Define the function for DFS algorithm
+
+
+def dfs(start, goal):
+    stack = [(start, [start])]
+    visited = set()
+    i = 1
+    while stack:
+        node, path = stack.pop()
+        visited.add(node)
+        print("\nIteration ", i)
+        print("Visited: ", list(visited))
+        print("Not Visited: ", list(set(graph.keys()) - visited))
+        print("Stack: ", [(n, p) for n, p in stack])
+        if node == goal:
+            print("\nPath found!")
+            return path
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                stack.append((neighbor, path + [neighbor]))
+        i += 1
+    print("No path found!")
+    return None
+
+
+# Test the function with the graph defined above
+start = input("Enter the start node: ")
+goal = input("Enter the goal node: ")
+print("\nPath from", start, "to", goal, "is", dfs(start, goal))
+
+
+    </pre>
+</body>
+
+</html>
