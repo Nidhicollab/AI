@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFS</title>
+</head>
+
+<body>
+    <pre>
+        from queue import Queue
+from collections import defaultdict
+# Define the graph as a dictionary of vertices and their neighbors
+
+# graph = {
+#     'A': ['B', 'C'],
+#     'B': ['D', 'E'],
+#     'C': ['F'],
+#     'D': [],
+#     'E': ['F'],
+#     'F': []
+# }
+'''
+The code defines a directed graph using a Python dictionary data structure.
+Each key-value pair in the dictionary represents a vertex in the graph and its corresponding list of neighbors. 
+For example, the vertex 'A' has two neighbors 'B' and 'C', while the vertex 'D' has no neighbors. 
+
+The syntax of the code is as follows:
+
+The keyword "graph" is used to declare a new dictionary variable.
+The key of each dictionary entry represents a vertex in the graph and is a string enclosed in quotes.
+The value of each dictionary entry is a list of strings that represent the neighboring vertices of the corresponding vertex.
+For example, the vertex 'A' has neighbors 'B' and 'C', so its value is ['B', 'C'].
+
+In the code above, the graph is represented using an adjacency list, which is a common way of representing graphs in computer science. Each vertex is represented by a key in the dictionary, and the value associated with each key is a list of its neighboring vertices.
+'''
+
+# Define the graph as a dictionary of vertices and their neighbors
+
+graph = defaultdict(list)
+
+# Get the number of edges from the user
+num_edges = int(input("Enter the number of edges: "))
+
+# Loop through the edges and add them to the graph
+for i in range(num_edges):
+    u, v = input("Enter the edge (u v): ").split()
+    graph[u].append(v)
+    graph[v].append(u)
+
+# Define the function for BFS algorithm
+
+print(graph)
+
+# Define the function for BFS algorithm
+
+
+def bfs(start, goal):
+    queue = Queue()
+    visited = []
+    queue.put(start)
+    iteration = 0
+    while not queue.empty():
+        print(f"Iteration {iteration}:")
+        print(f"Queue: {list(queue.queue)}")
+        print(f"Visited: {visited}\n")
+        node = queue.get()  # queue.get() not only retrieves the node from the front of the queue but also removes it from the queue. This is why the line node = queue.get() in the BFS algorithm code is used to retrieve and remove the next node in the queue.
+        # print(node)
+        if node == goal:
+            print(f"Goal node {goal} found!")
+            return True
+        visited.append(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited and neighbor not in queue.queue:
+                queue.put(neighbor)
+        iteration += 1
+    print(f"No path found from {start} to {goal}")
+    return False
+
+
+'''
+In the line "for neighbor in graph[node]:" , neighbor stands for each vertex adjacent to the current vertex node. It represents the children of the current node in the graph.
+
+The graph dictionary defines each vertex and its neighbors as a list of adjacent vertices. In the loop, graph[node] retrieves the list of neighbors for the current node. The for loop then iterates over each neighbor in the list and checks if it has already been visited or is already in the queue. If the neighbor has not been visited or added to the queue, it is added to the queue.
+
+So, in summary, the for loop iterates over each neighbor of the current node and adds the unvisited neighbors to the queue, effectively expanding the search to those neighbors.
+
+'''
+# Test the function with the graph defined above
+
+# start = 'A'
+# goal = 'F'
+start = input("Enter the starting node: ")
+goal = input("Enter the goal node: ")
+bfs(start, goal)
+
+    </pre>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Star</title>
+</head>
+
+<body>
+    <pre>
+        graph = {}
+dist = {}
+h = {}
+
+# Get input from user for graph edges and their weights
+while True:
+    edge = input("Enter an edge (source destination weight) or type 'done' to finish: ")
+    if edge == "done":
+        break
+    edge = edge.split()
+    source = edge[0]
+    destination = edge[1]
+    weight = int(edge[2])
+    if source not in graph:
+        graph[source] = [(destination, weight)]
+    else:
+        graph[source].append((destination, weight))
+
+# Get input from user for the distance dictionary
+for node in graph:
+    dist[node] = int(input(f"Enter distance from start node to {node}: "))
+
+# Get input from user for the heuristic dictionary
+for node in graph:
+    h[node] = int(input(f"Enter heuristic distance from {node} to goal node: "))
+
+def Astar(start, target):
+    q = []
+
+    q.append((h[start], start))
+
+    for x in graph:
+
+        dist[x] = 10000
+
+    dist[start] = 0
+
+    # Initialize the closed list to an empty set
+    closed = set()
+
+    while q:
+
+        # Print the open list
+        print("Open list:", q)
+        # Sort the queue to get the lowest f value first
+        q = sorted(q)
+        curr = q.pop(0)
+
+        # Add the current node to the closed list
+        closed.add(curr[1])
+
+        # Print the closed list
+        print("Closed list:", closed)
+
+        curr_dist = dist[curr[1]]
+
+        for node in graph[curr[1]]:
+
+            if curr_dist+node[1] < dist[node[0]]:
+
+                dist[node[0]] = curr_dist + node[1]
+                q.append((h[node[0]]+dist[node[0]], node[0]))
+
+    print("Shortest path till goal : ", dist[target])
+
+    print(dist)
+
+
+start = input("Enter the start node : ")
+print("start : " + start)
+goal = input("Enter the goal : ")
+print("goal : " + goal)
+print("Shortest path to all nodes from 'S' :")
+Astar(start, goal)
+
+    </pre>
+</body>
+
+</html>
